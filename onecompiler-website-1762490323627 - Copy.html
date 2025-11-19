@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Excel Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .ai-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .chat-bubble {
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .typing-indicator span {
+            animation: blink 1.4s infinite;
+            animation-fill-mode: both;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes blink {
+            0%, 60%, 100% { opacity: 0.2; }
+            30% { opacity: 1; }
+        }
+        
+        .hero-section {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ffffff" opacity="0.05"/><path d="M0 50 Q 25 25, 50 50 T 100 50" stroke="%23ffffff" stroke-width="1" fill="none" opacity="0.1"/></svg>');
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-robot text-blue-600 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl text-gray-900">AI Excel Assistant</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="scrollToSection('features')" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300">Features</button>
+                    <button onclick="scrollToSection('how-it-works')" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300">How It Works</button>
+                    <button onclick="scrollToSection('testimonials')" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300">Testimonials</button>
+                    <button onclick="scrollToSection('contact')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 hero-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                        Transform Your Excel Workflows with <span class="text-blue-600">AI Intelligence</span>
+                    </h1>
+                    <p class="mt-4 text-xl text-gray-600 max-w-lg">
+                        Our AI assistant helps you analyze data, create reports, and automate complex calculations in seconds.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button onclick="scrollToSection('features')" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-medium text-lg">
+                            Explore Features
+                        </button>
+                        <button onclick="openChat()" class="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition duration-300 font-medium text-lg">
+                            Try Demo
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 bg-blue-600 rounded-full absolute -top-6 -left-6 opacity-10 animate-pulse"></div>
+                        <div class="w-64 h-64 bg-purple-600 rounded-full absolute -bottom-6 -right-6 opacity-10 animate-pulse"></div>
+                        <div class="relative bg-white p-6 rounded-2xl shadow-xl border border-gray-100 transform rotate-3 ai-icon">
+                            <div class="flex items-center justify-center mb-4">
+                                <i class="fas fa-brain text-blue-600 text-4xl"></i>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="font-bold text-lg text-gray-900">AI Assistant</h3>
+                                <p class="text-sm text-gray-600 mt-2">Ready to help you with Excel tasks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900">Powerful AI Features</h2>
+                <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                    Everything you need to make your Excel work more efficient and intelligent
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Data Analysis</h3>
+                    <p class="text-gray-600">
+                        Automatically analyze trends, patterns, and insights from your Excel data with natural language queries.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-calculator text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Formula Generation</h3>
+                    <p class="text-gray-600">
+                        Generate complex Excel formulas instantly based on your natural language descriptions.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-alt text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Report Creation</h3>
+                    <p class="text-gray-600">
+                        Create professional reports and dashboards automatically from your data with customizable templates.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Task Automation</h3>
+                    <p class="text-gray-600">
+                        Automate repetitive Excel tasks and workflows with intelligent automation rules.
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Data Cleaning</h3>
+                    <p class="text-gray-600">
+                        Identify and fix data inconsistencies, duplicates, and errors with AI-powered cleaning tools.
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-6 border border-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-comments text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Natural Language Queries</h3>
+                    <p class="text-gray-600">
+                        Ask questions about your data using plain English and get instant, accurate responses.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900">How It Works</h2>
+                <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                    Simple steps to boost your Excel productivity with AI
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="md:w-1/3 mb-10 md:mb-0 text-center">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Connect Your Data</h3>
+                    <p class="text-gray-600">Upload or connect your Excel files directly to our AI system.</p>
+                </div>
+                
+                <div class="hidden md:block text-4xl text-blue-600">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="md:w-1/3 mb-10 md:mb-0 text-center">
+                    <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ask Questions</h3>
+                    <p class="text-gray-600">Describe what you want to do in plain English without any technical knowledge.</p>
+                </div>
+                
+                <div class="hidden md:block text-4xl text-green-600">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="md:w-1/3 text-center">
+                    <div class="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Get Results</h3>
+                    <p class="text-gray-600">Receive AI-generated solutions, insights, and completed tasks instantly.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-comment-dots text-blue-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="ml-6">
+                        <h4 class="text-lg font-bold text-gray-900">Try it yourself!</h4>
+                        <p class="mt-2 text-gray-600">
+                            "I need to find sales trends for Q3 and create a pivot table" - Type this into our chat and see how we help you.
+                        </p>
+                        <div class="mt-4 flex space-x-2">
+                            <button onclick="sendMessage('Find sales trends for Q3')" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg transition duration-300">
+                                Try Example
+                            </button>
+                            <button onclick="openChat()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300">
+                                Open Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900">What Our Users Say</h2>
+                <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                    Join thousands of professionals who have transformed their Excel workflow
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-600">Financial Analyst</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "This AI assistant has saved me hours every week. I can now generate complex financial models in minutes instead of hours!"
+                    </p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-green-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Michael Chen</h4>
+                            <p class="text-sm text-gray-600">Marketing Director</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "The data analysis capabilities are incredible. I can now identify customer trends that were invisible before with just a few natural language commands."
+                    </p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-purple-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Emma Rodriguez</h4>
+                            <p class="text-sm text-gray-600">Operations Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "The automation features have completely changed how I handle monthly reporting. What used to take me 2 days now takes less than an hour."
+                    </p>
+                    <div class="mt-4 flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gradient-to-r from-blue-600 to-purple-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white">Ready to Transform Your Excel?</h2>
+                <p class="mt-4 text-xl text-blue-100 max-w-3xl mx-auto">
+                    Join thousands of users who are already experiencing the power of AI in Excel
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h3 class="text-2xl font-bold text-white mb-4">Get Started Today</h3>
+                    <ul class="space-y-3 text-blue-100">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>No technical skills required</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>Works with all Excel versions</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>Secure and private data handling</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>24/7 support available</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="md:w-1/3 bg-white rounded-xl p-8 shadow-xl">
+                    <h4 class="text-xl font-bold text-gray-900 mb-4">Sign Up For Free</h4>
+                    <form id="signup-form">
+                        <div class="mb-4">
+                            <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <input type="text" placeholder="Company Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-medium">
+                            Start Free Trial
+                        </button>
+                    </form>
+                    <p class="mt-4 text-sm text-gray-600 text-center">
+                        No credit card required • Cancel anytime
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center">
+                        <i class="fas fa-robot text-blue-400 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl">AI Excel Assistant</span>
+                    </div>
+                    <p class="mt-4 text-gray-400">
+                        Making Excel smarter with artificial intelligence for everyone.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><button onclick="scrollToSection('features')" class="hover:text-white transition duration-300">Features</button></li>
+                        <li><button onclick="scrollToSection('how-it-works')" class="hover:text-white transition duration-300">How It Works</button></li>
+                        <li><button class="hover:text-white transition duration-300">Pricing</button></li>
+                        <li><button class="hover:text-white transition duration-300">Integrations</button></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><button class="hover:text-white transition duration-300">Documentation</button></li>
+                        <li><button class="hover:text-white transition duration-300">Tutorials</button></li>
+                        <li><button class="hover:text-white transition duration-300">Blog</button></li>
+                        <li><button class="hover:text-white transition duration-300">Support</button></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><button class="hover:text-white transition duration-300">About Us</button></li>
+                        <li><button class="hover:text-white transition duration-300">Careers</button></li>
+                        <li><button class="hover:text-white transition duration-300">Contact</button></li>
+                        <li><button class="hover:text-white transition duration-300">Privacy Policy</button></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 AI Excel Assistant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Interface -->
+    <div id="chat-container" class="fixed bottom-6 right-6 w-full max-w-md h-96 bg-white rounded-xl shadow-2xl z-50 hidden flex flex-col border border-gray-200">
+        <div class="bg-gray-800 text-white p-4 rounded-t-xl flex justify-between items-center">
+            <h3 class="font-bold">AI Excel Assistant</h3>
+            <button onclick="closeChat()" class="text-gray-300 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50">
+            <div class="chat-bubble bg-blue-100 text-gray-800 rounded-lg p-3 mb-3 max-w-xs">
+                Hello! I'm your AI Excel assistant. How can I help you today?
+            </div>
+        </div>
+        
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex">
+                <input type="text" id="message-input" placeholder="Ask about Excel..." class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button onclick="sendMessage()" class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button id="chat-toggle" onclick="openChat()" class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition duration-300 z-40">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script>
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Chat functionality
+        let chatOpen = false;
+
+        function openChat() {
+            document.getElementById('chat-container').classList.remove('hidden');
+            chatOpen = true;
+            document.getElementById('chat-toggle').classList.add('hidden');
+            document.getElementById('message-input').focus();
+        }
+
+        function closeChat() {
+            document.getElementById('chat-container').classList.add('hidden');
+            chatOpen = false;
+            document.getElementById('chat-toggle').classList.remove('hidden');
+        }
+
+        function sendMessage(message) {
+            const input = document.getElementById('message-input');
+            const messageText = message || input.value.trim();
+            
+            if (!messageText) return;
+            
+            // Add user message
+            addMessage(messageText, 'user');
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response after delay
+            setTimeout(() => {
+                const responses = [
+                    "I understand you're looking for help with Excel. Could you be more specific?",
+                    "That's a great question! Let me analyze your request.",
+                    "Based on your query, I recommend using the SUMIFS function for your needs.",
+                    "I've processed your request. Here's a quick solution...",
+                    "For better results, could you share some sample data?"
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessage(randomResponse, 'ai');
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            
+            if (sender === 'user') {
+                messageDiv.className = 'chat-bubble bg-blue-500 text-white rounded-lg p-3 mb-3 ml-auto max-w-xs';
+                messageDiv.textContent = text;
+            } else {
+                messageDiv.className = 'chat-bubble bg-gray-200 text-gray-800 rounded-lg p-3 mb-3 max-w-xs';
+                messageDiv.textContent = text;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Form submission
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for signing up! We\'ll send you a confirmation email shortly.');
+            this.reset();
+        });
+
+        // Close chat when clicking outside
+        document.addEventListener('click', function(event) {
+            const chatContainer = document.getElementById('chat-container');
+            const chatToggle = document.getElementById('chat-toggle');
+            
+            if (chatOpen && 
+                !chatContainer.contains(event.target) && 
+                event.target !== chatToggle && 
+                !chatToggle.contains(event.target)) {
+                closeChat();
+            }
+        });
+
+        // Handle Enter key in chat
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
