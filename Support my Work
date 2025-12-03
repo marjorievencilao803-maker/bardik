@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PayPal Donation Button</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .donation-box {
+        background: #fff;
+        padding: 30px;
+        width: 350px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .donation-box h2 {
+        margin: 0 0 10px;
+    }
+
+    .donation-box p {
+        color: #555;
+        font-size: 14px;
+    }
+
+    .pay-btn {
+        margin-top: 20px;
+        background: #0070ba;
+        color: #fff;
+        border: none;
+        padding: 14px 22px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .pay-btn:hover {
+        background: #005c95;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="donation-box">
+    <h2>Support My Work</h2>
+    <p>Your donation helps me build more tools & apps.<br>Thank you! ❤️</p>
+
+    <button class="pay-btn" onclick="sendDonation()">Donate with PayPal</button>
+</div>
+
+<script>
+function sendDonation() {
+    // Replace YOUR_PAYPAL_EMAIL with your real PayPal email
+    const paypalEmail = "marjorievencilao803@gmail.com";
+
+    const url = `https://www.paypal.com/donate?business=${marjorievencilao803@gmail.com}&currency_code=USD`;
+
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
